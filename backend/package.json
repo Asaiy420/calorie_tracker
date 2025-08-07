@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "bun --hot index.ts",
     "seed": "bun scripts/seed.ts",
-    "db:reset": "bunx prisma migrate reset --force && bun scripts/seed.ts"
+    "db:reset": "bunx prisma migrate reset --force && bun scripts/seed.ts",
+    "build": "bun build index.ts --outdir dist",
+    "start": "bun index.ts"
   },
   "devDependencies": {
     "@types/bun": "latest"
