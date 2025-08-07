@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import FoodRoutes from "./routes/food.route";
+import authRoutes from "./routes/food.route";
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(
 
 const PORT = process.env.PORT || 3000;
 
+app.use("/api/auth", authRoutes )
 app.use("/api/food", FoodRoutes);
 
 app.listen(PORT, () => {
