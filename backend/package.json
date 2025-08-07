@@ -3,6 +3,11 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "dev": "bun --hot index.ts",
+    "seed": "bun scripts/seed.ts",
+    "db:reset": "bunx prisma migrate reset --force && bun scripts/seed.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
