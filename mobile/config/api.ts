@@ -1,10 +1,10 @@
 // API Configuration
 export const API_CONFIG = {
-  // Base URL for the backend API
-  // Use your computer's IP address when running on physical device/emulator
-  BASE_URL: "http://192.168.100.216:3000/api",
+  // Base URL for the production backend API
+  BASE_URL: "https://calorie-tracker-kc42.onrender.com/api",
 
   // Timeout for API requests (in milliseconds)
+  TIMEOUT: 10000,
 
   // Endpoints
   ENDPOINTS: {
@@ -14,13 +14,9 @@ export const API_CONFIG = {
   },
 };
 
-
-
-// For Expo Web (running in browser):
+// Alternative configurations for development:
+// For local development (Expo Web):
 // BASE_URL: "http://localhost:3000/api"
 
-// For physical device or Android emulator:
-// BASE_URL: "http://192.168.100.216:3000/api" (your computer's IP)
-
-// For production deployment:
-// BASE_URL: "https://your-backend-domain.com/api"
+// For local development (physical device/emulator):
+// BASE_URL: "http://YOUR_IP:3000/api"
