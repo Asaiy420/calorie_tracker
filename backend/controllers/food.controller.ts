@@ -8,6 +8,7 @@ export const getAllFoods = async (
   try {
     const foods = await prisma.food.findMany();
     res.status(200).json(foods);
+    return;
   } catch (e) {
     console.error("Error fetching all foods:", e);
     res.status(500).send("Internal Server Error");
@@ -38,8 +39,45 @@ export const searchFoods = async (
     }
 
     res.status(200).json(foods);
+    return;
   } catch (e) {
     console.error("Error searching foods:", e);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+export const addFoods = async (req: Request, res: Response): Promise<void> => {
+  const { name, calories, protein, carbs, fats, unit, category } = req.body;
+
+  try {
+    if (
+      !name ||
+      !calories ||
+      !protein ||
+      !carbs ||
+      !fats ||
+      !unit ||
+      !category
+    ) {
+      res.status(400).send("All fields are required");
+      return;
+    }
+    const newFood = await prisma.food.create({
+      data: {
+        name,
+        calories,
+        protein,
+        carbs,
+        fats,
+        unit,
+        category,
+      },
+    });
+
+    res.status(201).json({ message: "Food added successfully", food: newFood });
+    return;
+  } catch (e) {
+    console.error("Error adding food:", e);
     res.status(500).send("Internal Server Error");
   }
 };
