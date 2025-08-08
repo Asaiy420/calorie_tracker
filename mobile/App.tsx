@@ -20,18 +20,34 @@ import {
   ActivityIndicator,
 } from "react-native-paper";
 
+import { Trash, LayoutDashboard, Search } from "lucide-react-native";
+
 import { NutritionSummary } from "./components/NutritionSummary";
 import { FoodCard } from "./components/FoodCard";
 import { FoodSearch } from "./components/FoodSearch";
 import { foodService, FoodItem } from "./services/foodService";
-
 const theme = {
   ...DefaultTheme,
+  roundness: 16,
   colors: {
     ...DefaultTheme.colors,
-    primary: "#4CAF50",
-    accent: "#FF9800",
-    background: "#f5f5f5",
+    primary: "#059669", // Professional emerald
+    primaryContainer: "#ECFDF5",
+    secondary: "#0891B2", // Cyan accent
+    secondaryContainer: "#E0F7FA",
+    background: "#FAFBFC",
+    surface: "#FFFFFF",
+    surfaceVariant: "#F8FAFC",
+    onSurface: "#0F172A",
+    onSurfaceVariant: "#475569",
+    outline: "#E2E8F0",
+    outlineVariant: "#F1F5F9",
+    error: "#DC2626",
+    errorContainer: "#FEF2F2",
+    onError: "#FFFFFF",
+    onPrimary: "#FFFFFF",
+    inverseSurface: "#1E293B",
+    inverseOnSurface: "#F8FAFC",
   },
 };
 
@@ -201,7 +217,7 @@ export default function App() {
                     onPress={() => removeFood(index)}
                     textColor={theme.colors.error}
                   >
-                    Remove
+                    <Trash size={24} color={theme.colors.error} />
                   </Button>
                 </View>
               ))
@@ -234,8 +250,26 @@ export default function App() {
   );
 
   const routes = [
-    { key: "dashboard", title: "Dashboard", focusedIcon: "view-dashboard" },
-    { key: "search", title: "Add Food", focusedIcon: "magnify" },
+    {
+      key: "dashboard",
+      title: "Dashboard",
+      focusedIcon: (props: { color: string; size: number }) => (
+        <LayoutDashboard color={props.color} size={20} />
+      ),
+      unfocusedIcon: (props: { color: string; size: number }) => (
+        <LayoutDashboard color={props.color} size={20} />
+      ),
+    },
+    {
+      key: "search",
+      title: "Search",
+      focusedIcon: (props: { color: string; size: number }) => (
+        <Search color={props.color} size={20} />
+      ),
+      unfocusedIcon: (props: { color: string; size: number }) => (
+        <Search color={props.color} size={20} />
+      ),
+    },
   ];
 
   const renderScene = BottomNavigation.SceneMap({
@@ -246,8 +280,8 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <View style={styles.container}>
-        <Appbar.Header>
-          <Appbar.Content title="Nepali Calorie Tracker" />
+        <Appbar.Header mode="center-aligned" style={styles.appbar}>
+          <Appbar.Content title={index === 0 ? "Dashboard" : "Search"} />
         </Appbar.Header>
 
         <BottomNavigation
@@ -255,6 +289,11 @@ export default function App() {
           onIndexChange={setIndex}
           renderScene={renderScene}
           barStyle={styles.bottomNavigation}
+          keyboardHidesNavigationBar={false}
+          shifting={false}
+          activeColor={theme.colors.primary}
+          inactiveColor={theme.colors.onSurfaceVariant}
+          compact={false}
         />
 
         {/* Add Food Modal */}
@@ -327,7 +366,7 @@ export default function App() {
           {snackbarMessage}
         </Snackbar>
 
-        <StatusBar style="auto" />
+        <StatusBar style="dark" />
       </View>
     </PaperProvider>
   );
@@ -336,27 +375,47 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: theme.colors.background,
+  },
+  appbar: {
+    backgroundColor: theme.colors.surface,
+    elevation: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: theme.colors.outline,
   },
   scrollView: {
     flex: 1,
     padding: 16,
+    paddingBottom: 100,
   },
   searchContainer: {
     flex: 1,
     padding: 16,
+    paddingBottom: 100,
   },
   bottomNavigation: {
-    backgroundColor: "#fff",
+    backgroundColor: theme.colors.surface,
+    borderTopWidth: 1,
+    borderTopColor: theme.colors.outline,
+    height: 80,
+    paddingBottom: 8,
+    paddingTop: 8,
+    elevation: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
   },
   summaryCard: {
-    marginBottom: 16,
-    elevation: 4,
+    marginBottom: 20,
+    elevation: 3,
+    borderRadius: theme.roundness,
+    backgroundColor: theme.colors.surface,
   },
   summaryTitle: {
     textAlign: "center",
     marginBottom: 16,
-    color: "#2E7D32",
+    color: theme.colors.onSurface,
   },
   calorieRow: {
     flexDirection: "row",
@@ -367,11 +426,11 @@ const styles = StyleSheet.create({
   calorieText: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#2E7D32",
+    color: theme.colors.primary,
   },
   calorieLabel: {
     fontSize: 16,
-    color: "#666",
+    color: theme.colors.onSurfaceVariant,
     marginLeft: 8,
   },
   progressBar: {
@@ -389,20 +448,22 @@ const styles = StyleSheet.create({
   macroValue: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#2E7D32",
+    color: theme.colors.primary,
   },
   macroLabel: {
     fontSize: 12,
-    color: "#666",
+    color: theme.colors.onSurfaceVariant,
     marginTop: 4,
   },
   diaryCard: {
-    marginBottom: 16,
-    elevation: 4,
+    marginBottom: 20,
+    elevation: 3,
+    borderRadius: theme.roundness,
+    backgroundColor: theme.colors.surface,
   },
   emptyText: {
     textAlign: "center",
-    color: "#666",
+    color: theme.colors.onSurfaceVariant,
     fontStyle: "italic",
     marginVertical: 20,
   },
@@ -410,9 +471,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 12,
+    paddingVertical: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+    borderBottomColor: theme.colors.outlineVariant,
   },
   foodInfo: {
     flex: 1,
@@ -424,12 +485,12 @@ const styles = StyleSheet.create({
   },
   foodCalories: {
     fontSize: 14,
-    color: "#666",
+    color: theme.colors.onSurfaceVariant,
     marginBottom: 4,
   },
   foodDetails: {
     fontSize: 12,
-    color: "#888",
+    color: theme.colors.onSurfaceVariant,
     marginBottom: 4,
   },
   categoryChip: {
@@ -440,7 +501,9 @@ const styles = StyleSheet.create({
   },
   quickAddCard: {
     marginBottom: 100,
-    elevation: 4,
+    elevation: 3,
+    borderRadius: theme.roundness,
+    backgroundColor: theme.colors.surface,
   },
   foodGrid: {
     flexDirection: "row",
@@ -475,28 +538,29 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor: "#4CAF50",
+    backgroundColor: theme.colors.primary,
   },
   modal: {
-    backgroundColor: "white",
+    backgroundColor: theme.colors.surface,
     padding: 24,
     margin: 20,
-    borderRadius: 8,
+    borderRadius: theme.roundness,
+    elevation: 8,
   },
   selectedFoodName: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
-    color: "#2E7D32",
+    color: theme.colors.onSurface,
   },
   selectedFoodInfo: {
     fontSize: 14,
-    color: "#666",
+    color: theme.colors.onSurfaceVariant,
     marginBottom: 8,
   },
   selectedFoodMacros: {
     fontSize: 12,
-    color: "#888",
+    color: theme.colors.onSurfaceVariant,
     marginBottom: 16,
   },
   quantityInput: {
@@ -505,7 +569,7 @@ const styles = StyleSheet.create({
   calculatedInfo: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#2E7D32",
+    color: theme.colors.primary,
     marginBottom: 20,
     textAlign: "center",
   },
@@ -528,7 +592,7 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: "#666",
+    color: theme.colors.onSurfaceVariant,
   },
   errorContainer: {
     flex: 1,
@@ -538,7 +602,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 16,
-    color: "#f44336",
+    color: theme.colors.error,
     textAlign: "center",
     marginBottom: 20,
   },
