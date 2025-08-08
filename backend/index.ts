@@ -26,7 +26,7 @@ app.use(
 
 const PORT = process.env.PORT || 3000;
 
-app.use("/api/auth", authRoutes )
+app.use("/api/auth", authRoutes);
 app.use("/api/food", FoodRoutes);
 
 app.listen(PORT, () => {
