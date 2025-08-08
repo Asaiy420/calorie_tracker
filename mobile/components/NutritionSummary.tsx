@@ -43,7 +43,7 @@ export const NutritionSummary: React.FC<NutritionSummaryProps> = ({
 
           <ProgressBar
             progress={calorieProgress}
-            color={calorieProgress > 1 ? "#f44336" : "#4CAF50"}
+            color={calorieProgress > 1 ? "#DC2626" : "#059669"}
             style={styles.progressBar}
           />
         </View>
@@ -57,7 +57,7 @@ export const NutritionSummary: React.FC<NutritionSummaryProps> = ({
                 styles.macroBar,
                 {
                   width: `${Math.min((totalProtein / 150) * 100, 100)}%`,
-                  backgroundColor: "#2196F3",
+                  backgroundColor: "#2563EB",
                 },
               ]}
             />
@@ -70,7 +70,7 @@ export const NutritionSummary: React.FC<NutritionSummaryProps> = ({
                 styles.macroBar,
                 {
                   width: `${Math.min((totalCarbs / 250) * 100, 100)}%`,
-                  backgroundColor: "#FF9800",
+                  backgroundColor: "#EA580C",
                 },
               ]}
             />
@@ -83,7 +83,7 @@ export const NutritionSummary: React.FC<NutritionSummaryProps> = ({
                 styles.macroBar,
                 {
                   width: `${Math.min((totalFats / 65) * 100, 100)}%`,
-                  backgroundColor: "#9C27B0",
+                  backgroundColor: "#9333EA",
                 },
               ]}
             />
@@ -97,14 +97,16 @@ export const NutritionSummary: React.FC<NutritionSummaryProps> = ({
 const styles = StyleSheet.create({
   summaryCard: {
     marginBottom: 16,
-    elevation: 4,
+    elevation: 2,
     backgroundColor: "#fff",
+    borderRadius: 16,
   },
   summaryTitle: {
     textAlign: "center",
     marginBottom: 20,
-    color: "#2E7D32",
-    fontSize: 20,
+    color: "#0F172A",
+    fontSize: 22,
+    fontWeight: "600",
   },
   calorieSection: {
     marginBottom: 24,
@@ -116,19 +118,19 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   calorieText: {
-    fontSize: 36,
-    fontWeight: "bold",
-    color: "#2E7D32",
+    fontSize: 40,
+    fontWeight: "700",
+    color: "#059669",
   },
   calorieLabel: {
     fontSize: 16,
-    color: "#666",
+    color: "#475569",
     marginLeft: 8,
   },
   remainingText: {
     textAlign: "center",
     fontSize: 14,
-    color: "#666",
+    color: "#475569",
     marginBottom: 12,
   },
   progressBar: {
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
   macroValue: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#333",
+    color: "#0F172A",
   },
   macroLabel: {
     fontSize: 12,
