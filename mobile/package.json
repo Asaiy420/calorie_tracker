@@ -12,6 +12,7 @@
     "axios": "^1.11.0",
     "expo": "~53.0.20",
     "expo-status-bar": "~2.2.3",
+    "lucide-react-native": "^0.539.0",
     "react": "19.0.0",
     "react-native": "0.79.5",
     "react-native-paper": "^5.14.5",
